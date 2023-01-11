@@ -1,14 +1,23 @@
 import React from 'react';
-import {StyleSheet, Text, SafeAreaView} from 'react-native';
+import {StyleSheet, SafeAreaView} from 'react-native';
+import {ThemeProvider} from 'styled-components';
+
+import {AppNavigator} from './navigation/AppNavigator';
+import {theme} from './theme';
 
 export const App = () => {
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-      <Text style={styles.text}>Hello</Text>
+    <SafeAreaView style={styles.safeContainer}>
+      <ThemeProvider theme={theme}>
+        <AppNavigator />
+      </ThemeProvider>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  text: {color: 'black', fontFamily: 'Poppins-Regular'},
+  safeContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
 });
