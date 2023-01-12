@@ -1,7 +1,8 @@
 import React from 'react';
-import {ImageBackground, StyleSheet, Image} from 'react-native';
-import {useFormik} from 'formik';
 import * as Yup from 'yup';
+import {useFormik} from 'formik';
+import {useNavigation} from '@react-navigation/native';
+import {ImageBackground, StyleSheet, Image} from 'react-native';
 
 import {
   Container,
@@ -9,12 +10,19 @@ import {
   Touchable,
   HideKeyboard,
   LoginInput,
+  Button,
 } from '../components';
 import {images} from '../assets/images/index';
+import {screenNames} from '../navigation/screenNames';
+
 export const Login = () => {
+  const navigation = useNavigation();
+
   const handleLogin = values => {
     console.log(values);
+    navigation.navigate(screenNames.Disclaimer);
   };
+
   const {
     handleChange,
     handleSubmit,
@@ -33,6 +41,7 @@ export const Login = () => {
     initialValues: {email: '', password: ''},
     onSubmit: handleLogin,
   });
+
   return (
     <HideKeyboard>
       <Container flex={1} bg="white" alignItems="center" pt={100}>
@@ -71,24 +80,12 @@ export const Login = () => {
           resizeMode="cover"
           style={styles.image}>
           <Container flex={1} alignItems="center">
-            <Touchable
-              bg="red"
-              flexDirection="row"
-              alignItems="center"
-              borderRadius={50}
+            <Button
               onPress={handleSubmit}
-              px={29}
-              py={18}
-              mb={23}>
-              <Typography
-                fontFamily="Poppins700"
-                fontSize="subTitle"
-                color="white">
-                Login
-              </Typography>
-              <Image source={images.arrowRight} style={styles.arrowRight} />
-            </Touchable>
-            <Touchable>
+              label="Login"
+              rightIcon={images.arrowRight}
+            />
+            <Touchable activeOpacity={0.6}>
               <Typography fontFamily="Poppins700" fontSize="subText">
                 Forgot Password?
               </Typography>

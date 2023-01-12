@@ -6,3 +6,5 @@ export {Typography} from './Typography';
 export {ScrollView} from './ScrollView';
 export {HideKeyboard} from './HideKeyboard';
 export {LoginInput} from './LoginInput';
+export {Header} from './Header';
+export {Button} from './Button';

@@ -26,9 +26,9 @@ export const AppNavigator = () => {
           headerShown: false,
         })}>
         <Stack.Screen name={screenNames.Login} component={Login} />
+        <Stack.Screen name={screenNames.Disclaimer} component={Disclaimer} />
         <Stack.Screen name={screenNames.Details} component={Details} />
         <Stack.Screen name={screenNames.Stations} component={Stations} />
-        <Stack.Screen name={screenNames.Disclaimer} component={Disclaimer} />
       </Stack.Navigator>
     </NavigationContainer>
   );

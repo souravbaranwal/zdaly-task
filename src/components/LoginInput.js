@@ -2,8 +2,8 @@ import React from 'react';
 import {Image} from 'react-native';
 
 import {Input} from './Input';
-import {Container} from './Container';
 import {theme} from '../theme';
+import {Container} from './Container';
 import {Typography} from './Typography';
 
 export const LoginInput = ({
