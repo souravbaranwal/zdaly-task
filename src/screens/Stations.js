@@ -82,7 +82,7 @@ export const Stations = () => {
             alignItems="center"
             bg="grey200"
             px={21}
-            py={18}
+            height={60}
             width="100%"
             borderRadius={12}>
             <Image source={images.searchIcon} />
@@ -96,6 +96,7 @@ export const Stations = () => {
               fontSize="subTitle"
               ml={16}
               flex={1}
+              lineHeight="20px"
             />
           </Container>
           {isLoading ? (
