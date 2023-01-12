@@ -22,7 +22,7 @@ export const LoginInput = ({
     <>
       <Container
         borderBottomWidth={1}
-        borderBottomColor={errorMessage ? 'red' : 'border'}
+        borderBottomColor={errorMessage ? 'red' : 'grey200'}
         flexDirection="row"
         alignItems="center"
         pb={16}

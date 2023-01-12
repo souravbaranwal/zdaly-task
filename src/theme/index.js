@@ -5,7 +5,7 @@ export const theme = {
     white: '#FFFFFF',
     black: '#000000',
     grey: '#E2E8E1',
-    border: '#F0F4F5',
+    grey200: '#F0F4F5',
     red: '#DD1D21',
   },
   fonts: {
@@ -24,5 +24,6 @@ export const theme = {
     title: 18,
     big: 21,
     huge: 32,
+    superHuge: 36,
   },
 };

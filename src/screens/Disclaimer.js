@@ -10,11 +10,17 @@ export const Disclaimer = () => {
       <Container
         alignItems="center"
         bg="white"
+        width="100%"
+        height="100%"
         px={34}
         pt={33}
         borderTopRightRadius={46}
         position="absolute"
         top={130}
+        elevation={20}
+        shadowOffset={{width: 0, height: 0}}
+        shadowOpacity={0.15}
+        shadowRadius={20}
         borderTopLeftRadius={46}>
         <Typography fontFamily="Poppins700" fontSize="big" mb={13}>
           Disclaimer

@@ -29,7 +29,11 @@ export const Button = ({
         <ActivityIndicator color={theme.colors.white} size="small" />
       ) : (
         <>
-          <Typography fontFamily="Poppins700" fontSize="subTitle" color="white">
+          <Typography
+            fontFamily="Poppins700"
+            fontSize="subTitle"
+            color="white"
+            {...rest.labelProps}>
             {label}
           </Typography>
           {rightIcon && (

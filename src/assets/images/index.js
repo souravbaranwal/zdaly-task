@@ -7,4 +7,6 @@ export const images = {
   emailIcon: require('./emailIcon.png'),
   arrowRight: require('./arrowRight.png'),
   arrowLeft: require('./arrowLeft.png'),
+  searchIcon: require('./searchIcon.png'),
+  downIcon: require('./downIcon.png'),
 };

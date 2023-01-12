@@ -1,5 +1,6 @@
 import React from 'react';
 import {ImageBackground, StyleSheet, Image} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import {Touchable} from './Touchable';
 import {Container} from './Container';
@@ -7,6 +8,8 @@ import {Typography} from './Typography';
 import {images} from '../assets/images';
 
 export const Header = ({canGoBack, logo, title}) => {
+  const navigation = useNavigation();
+
   return (
     <ImageBackground
       source={images.headerBackground}
@@ -21,6 +24,7 @@ export const Header = ({canGoBack, logo, title}) => {
       {canGoBack && (
         <Touchable
           mr={-16}
+          onPress={navigation.goBack}
           hitSlop={{
             top: 10,
             right: 10,
@@ -32,7 +36,7 @@ export const Header = ({canGoBack, logo, title}) => {
       )}
       {title && (
         <Typography fontFamily="Poppins700" fontSize="big">
-          title
+          {title}
         </Typography>
       )}
 
