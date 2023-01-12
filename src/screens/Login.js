@@ -22,24 +22,17 @@ export const Login = () => {
     loginUser(values);
   };
 
-  const {
-    handleChange,
-    handleSubmit,
-    handleBlur,
-    errors,
-    values,
-    // isValid,
-    touched,
-  } = useFormik({
-    validationSchema: Yup.object().shape({
-      email: Yup.string().email('Invalid Email').required('Required'),
-      password: Yup.string().required('Required'),
-    }),
-    validateOnBlur: true,
-    validateOnMount: false,
-    initialValues: {email: '', password: ''},
-    onSubmit: handleLogin,
-  });
+  const {handleChange, handleSubmit, handleBlur, errors, values, touched} =
+    useFormik({
+      validationSchema: Yup.object().shape({
+        email: Yup.string().email('Invalid Email').required('Required'),
+        password: Yup.string().required('Required'),
+      }),
+      validateOnBlur: true,
+      validateOnMount: false,
+      initialValues: {email: '', password: ''},
+      onSubmit: handleLogin,
+    });
 
   return (
     <HideKeyboard>

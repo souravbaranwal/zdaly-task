@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Image, FlatList, StyleSheet, ActivityIndicator} from 'react-native';
+import {
+  Image,
+  FlatList,
+  StyleSheet,
+  ActivityIndicator,
+  Keyboard,
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import {
   Container,
@@ -11,10 +18,13 @@ import {
 } from '../components';
 import {theme} from '../theme';
 import {images} from '../assets/images';
-import {useStations} from '../hooks/query/useStations';
 import {checkEquality} from '../helpers/utils';
+import {useStations} from '../hooks/query/useStations';
+import {screenNames} from '../navigation/screenNames';
 
 export const Stations = () => {
+  const navigation = useNavigation();
+
   const [searchString, setSearchString] = useState('');
   const {useGetStations} = useStations();
   const {data: stations, isLoading} = useGetStations();
@@ -29,6 +39,7 @@ export const Stations = () => {
   const renderItem = ({item}) => {
     return (
       <Touchable
+        onPress={() => navigation.navigate(screenNames.Details, {item})}
         flexDirection="row"
         alignItems="center"
         py={26}
@@ -84,16 +95,20 @@ export const Stations = () => {
               fontFamily="Poppins500"
               fontSize="subTitle"
               ml={16}
+              flex={1}
             />
           </Container>
           {isLoading ? (
-            <ActivityIndicator color={theme.colors.white} size="small" />
+            <Container flex={1} alignItems="center" mt={50}>
+              <ActivityIndicator color={theme.colors.secondary} size="small" />
+            </Container>
           ) : (
             <FlatList
               style={styles.flatList}
               data={filteredStations ?? []}
               keyExtractor={keyExtractor}
               renderItem={renderItem}
+              onScrollBeginDrag={Keyboard.dismiss}
               ItemSeparatorComponent={() => (
                 <Container borderBottomWidth={1} borderBottomColor="grey200" />
               )}
