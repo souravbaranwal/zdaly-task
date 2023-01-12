@@ -1,82 +1,102 @@
 import React from 'react';
 import {ImageBackground, StyleSheet, Image} from 'react-native';
+import {useFormik} from 'formik';
+import * as Yup from 'yup';
 
-import {Container, Typography, Input, Touchable} from '../components';
+import {
+  Container,
+  Typography,
+  Touchable,
+  HideKeyboard,
+  LoginInput,
+} from '../components';
 import {images} from '../assets/images/index';
-import {theme} from '../theme/index';
 export const Login = () => {
+  const handleLogin = values => {
+    console.log(values);
+  };
+  const {
+    handleChange,
+    handleSubmit,
+    handleBlur,
+    errors,
+    values,
+    // isValid,
+    touched,
+  } = useFormik({
+    validationSchema: Yup.object().shape({
+      email: Yup.string().email('Invalid Email').required('Required'),
+      password: Yup.string().required('Required'),
+    }),
+    validateOnBlur: true,
+    validateOnMount: false,
+    initialValues: {email: '', password: ''},
+    onSubmit: handleLogin,
+  });
   return (
-    <Container flex={1} bg="white" alignItems="center" pt={100}>
-      <Image source={images.logo} />
-      <Typography mt={48} mb={54} fontFamily="Poppins700" fontSize="big">
-        Login
-      </Typography>
-      <Container px={55}>
-        <Container
-          borderBottomWidth={1}
-          borderBottomColor="border"
-          flexDirection="row"
-          alignItems="center"
-          pb={16}
-          mb={28}>
-          <Image source={images.emailIcon} />
-          <Input
-            color="black"
+    <HideKeyboard>
+      <Container flex={1} bg="white" alignItems="center" pt={100}>
+        <Image source={images.logo} />
+        <Typography mt={48} mb={54} fontFamily="Poppins700" fontSize="big">
+          Login
+        </Typography>
+        <Container px={55} mb={24}>
+          <LoginInput
             placeholder="Email..."
-            placeholderTextColor={theme.colors.secondary}
-            keyboardType="email-address"
-            // onChangeText={onChangeText}
-            width="100%"
-            fontFamily="Poppins700"
-            fontSize="subTitle"
-            ml={28}
+            leftIcon={images.emailIcon}
+            value={values.email}
+            onChangeText={handleChange('email')}
+            onBlur={handleBlur('email')}
+            errorMessage={touched?.email && errors.email}
+            inputProps={{
+              keyboardType: 'email-address',
+              autoCapitalize: 'none',
+            }}
           />
-        </Container>
-        <Container
-          borderBottomWidth={1}
-          borderBottomColor="border"
-          flexDirection="row"
-          alignItems="center"
-          pb={16}
-          mb={28}>
-          <Image source={images.lockIcon} />
-          <Input
-            color="black"
+          <LoginInput
             placeholder="Password..."
-            placeholderTextColor={theme.colors.secondary}
-            // onChangeText={onChangeText}
-            width="100%"
-            fontFamily="Poppins700"
-            fontSize="subTitle"
-            ml={28}
-            secureTextEntry
+            isPassword
+            leftIcon={images.lockIcon}
+            value={values.password}
+            onChangeText={handleChange('password')}
+            onBlur={handleBlur('password')}
+            errorMessage={touched?.password && errors.password}
+            inputProps={{
+              autoCapitalize: 'none',
+            }}
           />
         </Container>
+        <ImageBackground
+          source={images.background}
+          resizeMode="cover"
+          style={styles.image}>
+          <Container flex={1} alignItems="center">
+            <Touchable
+              bg="red"
+              flexDirection="row"
+              alignItems="center"
+              borderRadius={50}
+              onPress={handleSubmit}
+              px={29}
+              py={18}
+              mb={23}>
+              <Typography
+                fontFamily="Poppins700"
+                fontSize="subTitle"
+                color="white">
+                Login
+              </Typography>
+              <Image source={images.arrowRight} style={styles.arrowRight} />
+            </Touchable>
+            <Touchable>
+              <Typography fontFamily="Poppins700" fontSize="subText">
+                Forgot Password?
+              </Typography>
+            </Touchable>
+          </Container>
+        </ImageBackground>
       </Container>
-      <ImageBackground
-        source={images.background}
-        resizeMode="contain"
-        style={styles.image}>
-        <Touchable
-          bg="red"
-          flexDirection="row"
-          alignItems="center"
-          borderRadius={50}
-          px={29}
-          py={18}
-          mb={23}>
-          <Typography fontFamily="Poppins700" fontSize="subTitle" color="white">
-            Login
-          </Typography>
-          <Image source={images.arrowRight} style={styles.arrowRight} />
-        </Touchable>
-        <Touchable>
-          <Typography fontFamily="Poppins700" fontSize="subText">
-            Forgot Password?
-          </Typography>
-        </Touchable>
-      </ImageBackground>
-    </Container>
+    </HideKeyboard>
   );
 };
 
@@ -84,6 +104,7 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     justifyContent: 'center',
+    width: '100%',
   },
   arrowRight: {
     marginLeft: 8,
