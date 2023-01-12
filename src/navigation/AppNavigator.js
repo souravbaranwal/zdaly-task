@@ -1,23 +1,29 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import {useQueryClient} from 'react-query';
 
-import {getItem} from '../helpers/asyncStore';
 import {screenNames} from './screenNames';
 import {Login, Details, Disclaimer, Stations} from '../screens';
+import {configureAxios} from '../config/axios';
 
 const Stack = createStackNavigator();
 
 export const AppNavigator = () => {
-  const [isVisited, setIsVisited] = useState(null);
+  const isLoggedIn = useSelector(({auth: {isLoggedIn}}) => isLoggedIn);
+  const isOnboarded = useSelector(({auth: {isOnboarded}}) => isOnboarded);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
-    const checkIsVisited = async () => {
-      const visited = await getItem('isVisited');
-      setIsVisited(visited || false);
-    };
-    checkIsVisited();
+    configureAxios();
   }, []);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      queryClient.removeQueries();
+    }
+  }, [isLoggedIn, queryClient]);
 
   return (
     <NavigationContainer>
@@ -25,10 +31,28 @@ export const AppNavigator = () => {
         screenOptions={() => ({
           headerShown: false,
         })}>
-        <Stack.Screen name={screenNames.Login} component={Login} />
-        <Stack.Screen name={screenNames.Details} component={Details} />
-        <Stack.Screen name={screenNames.Stations} component={Stations} />
-        <Stack.Screen name={screenNames.Disclaimer} component={Disclaimer} />
+        {isLoggedIn ? (
+          <>
+            {isOnboarded ? (
+              <>
+                <Stack.Screen
+                  name={screenNames.Stations}
+                  component={Stations}
+                />
+                <Stack.Screen name={screenNames.Details} component={Details} />
+              </>
+            ) : (
+              <Stack.Screen
+                name={screenNames.Disclaimer}
+                component={Disclaimer}
+              />
+            )}
+          </>
+        ) : (
+          <>
+            <Stack.Screen name={screenNames.Login} component={Login} />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

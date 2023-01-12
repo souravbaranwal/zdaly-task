@@ -1,9 +1,16 @@
 import React from 'react';
+import {useDispatch} from 'react-redux';
 
-import {Container, Header, Typography, Button} from '../components';
 import {images} from '../assets/images';
+import {onboardUserAction} from '../redux/slices/auth';
+import {Container, Header, Typography, Button} from '../components';
 
 export const Disclaimer = () => {
+  const dispatch = useDispatch();
+
+  const handleOnboardUser = () => {
+    dispatch(onboardUserAction({isOnboarded: true}));
+  };
   return (
     <Container flex={1} bg="white">
       <Header logo={images.logo} />
@@ -34,7 +41,7 @@ export const Disclaimer = () => {
           suggested retail price (MSRP) only. Sites are independent operators
           free to set their retail price.
         </Typography>
-        <Button onPress={() => {}} label="I Accept" px={86} />
+        <Button onPress={handleOnboardUser} label="I Accept" px={86} />
       </Container>
     </Container>
   );

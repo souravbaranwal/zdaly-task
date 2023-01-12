@@ -1,9 +1,10 @@
 import React from 'react';
-import {StyleSheet, SafeAreaView} from 'react-native';
-import {ThemeProvider} from 'styled-components';
-import {QueryClient, QueryClientProvider} from 'react-query';
-import {PersistGate} from 'redux-persist/integration/react';
 import {Provider} from 'react-redux';
+import Toast from 'react-native-toast-message';
+import {ThemeProvider} from 'styled-components';
+import {StyleSheet, SafeAreaView} from 'react-native';
+import {PersistGate} from 'redux-persist/integration/react';
+import {QueryClient, QueryClientProvider} from 'react-query';
 
 import {AppNavigator} from './navigation/AppNavigator';
 import {theme} from './theme';
@@ -19,6 +20,7 @@ export const App = () => {
           <ThemeProvider theme={theme}>
             <QueryClientProvider client={queryClient}>
               <AppNavigator />
+              <Toast />
             </QueryClientProvider>
           </ThemeProvider>
         </PersistGate>

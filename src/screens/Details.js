@@ -1,8 +1,8 @@
 import React from 'react';
 import {Image} from 'react-native';
 
-import {Container, Header, Typography, Button, Touchable} from '../components';
 import {images} from '../assets/images';
+import {Container, Header, Typography, Button, Touchable} from '../components';
 
 export const Details = () => {
   return (

@@ -9,11 +9,12 @@ import {
   Typography,
   Touchable,
 } from '../components';
-import {images} from '../assets/images';
 import {theme} from '../theme';
+import {images} from '../assets/images';
 
 export const Stations = () => {
   const [searchString, setSearchString] = useState('');
+
   return (
     <HideKeyboard>
       <Container bg="white" flex={1}>

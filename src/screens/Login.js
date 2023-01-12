@@ -1,7 +1,6 @@
 import React from 'react';
 import * as Yup from 'yup';
 import {useFormik} from 'formik';
-import {useNavigation} from '@react-navigation/native';
 import {ImageBackground, StyleSheet, Image} from 'react-native';
 
 import {
@@ -13,14 +12,14 @@ import {
   Button,
 } from '../components';
 import {images} from '../assets/images/index';
-import {screenNames} from '../navigation/screenNames';
+import {useAuthentication} from '../hooks/query/useAuthentication';
 
 export const Login = () => {
-  const navigation = useNavigation();
+  const {useLogin} = useAuthentication();
+  const {mutate: loginUser, isLoading} = useLogin();
 
   const handleLogin = values => {
-    console.log(values);
-    navigation.navigate(screenNames.Disclaimer);
+    loginUser(values);
   };
 
   const {
@@ -84,6 +83,7 @@ export const Login = () => {
               onPress={handleSubmit}
               label="Login"
               rightIcon={images.arrowRight}
+              isLoading={isLoading}
             />
             <Touchable activeOpacity={0.6}>
               <Typography fontFamily="Poppins700" fontSize="subText">
