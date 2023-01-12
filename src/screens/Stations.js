@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Image} from 'react-native';
+import {Image, FlatList, StyleSheet, ActivityIndicator} from 'react-native';
 
 import {
   Container,
@@ -11,10 +11,42 @@ import {
 } from '../components';
 import {theme} from '../theme';
 import {images} from '../assets/images';
+import {useStations} from '../hooks/query/useStations';
+import {checkEquality} from '../helpers/utils';
 
 export const Stations = () => {
   const [searchString, setSearchString] = useState('');
+  const {useGetStations} = useStations();
+  const {data: stations, isLoading} = useGetStations();
 
+  const filteredStations = stations?.filter(
+    ({name, pantone_value}) =>
+      checkEquality(name, searchString) ||
+      checkEquality(pantone_value, searchString),
+  );
+
+  const keyExtractor = item => item.id;
+  const renderItem = ({item}) => {
+    return (
+      <Touchable
+        flexDirection="row"
+        alignItems="center"
+        py={26}
+        activeOpacity={0.6}>
+        <Container mr={27}>
+          <Image source={images.pumpIcon} />
+        </Container>
+        <Container flex={1}>
+          <Typography fontFamily="Poppins600" fontSize="title">
+            {item.pantone_value}
+          </Typography>
+          <Typography fontFamily="Poppins600" fontSize="body" color="secondary">
+            {item.name}
+          </Typography>
+        </Container>
+      </Touchable>
+    );
+  };
   return (
     <HideKeyboard>
       <Container bg="white" flex={1}>
@@ -54,68 +86,31 @@ export const Stations = () => {
               ml={16}
             />
           </Container>
-          <Touchable
-            flexDirection="row"
-            alignItems="center"
-            py={26}
-            activeOpacity={0.6}>
-            <Container mr={27}>
-              <Image source={images.pumpIcon} />
-            </Container>
-            <Container flex={1}>
-              <Typography fontFamily="Poppins600" fontSize="title">
-                1041700
-              </Typography>
-              <Typography
-                fontFamily="Poppins600"
-                fontSize="body"
-                color="secondary">
-                ISLAND_LAKE_BP
-              </Typography>
-            </Container>
-          </Touchable>
-          <Touchable
-            flexDirection="row"
-            alignItems="center"
-            py={26}
-            activeOpacity={0.6}>
-            <Container mr={27}>
-              <Image source={images.pumpIcon} />
-            </Container>
-            <Container flex={1}>
-              <Typography fontFamily="Poppins600" fontSize="title">
-                1041700
-              </Typography>
-              <Typography
-                fontFamily="Poppins600"
-                fontSize="body"
-                color="secondary">
-                ISLAND_LAKE_BP
-              </Typography>
-            </Container>
-          </Touchable>
-          <Touchable
-            flexDirection="row"
-            alignItems="center"
-            py={26}
-            activeOpacity={0.6}>
-            <Container mr={27}>
-              <Image source={images.pumpIcon} />
-            </Container>
-            <Container flex={1}>
-              <Typography fontFamily="Poppins600" fontSize="title">
-                1041700
-              </Typography>
-              <Typography
-                fontFamily="Poppins600"
-                fontSize="body"
-                color="secondary">
-                ISLAND_LAKE_BP
-              </Typography>
-            </Container>
-          </Touchable>
+          {isLoading ? (
+            <ActivityIndicator color={theme.colors.white} size="small" />
+          ) : (
+            <FlatList
+              style={styles.flatList}
+              data={filteredStations ?? []}
+              keyExtractor={keyExtractor}
+              renderItem={renderItem}
+              ItemSeparatorComponent={() => (
+                <Container borderBottomWidth={1} borderBottomColor="grey200" />
+              )}
+              contentContainerStyle={styles.contentContainer}
+            />
+          )}
         </Container>
       </Container>
     </HideKeyboard>
   );
 };
+
+const styles = StyleSheet.create({
+  flatList: {
+    width: '100%',
+  },
+  contentContainer: {
+    paddingBottom: 30,
+  },
+});
