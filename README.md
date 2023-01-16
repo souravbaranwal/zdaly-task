@@ -1,4 +1,8 @@
-# zdaly-task
+## zdaly-task
+
+[Task Details](https://docs.google.com/document/d/17TKVIa7dGyukKQG93Ia3rcaBQe_YEPhSNppZaZb5mMc/edit?usp=share_link)
+
+
 ## Development Setup
 
 1. Configure your machine for React Native development by following the [official documentation](https://reactnative.dev/docs/environment-setup).
