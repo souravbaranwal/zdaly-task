@@ -2,6 +2,8 @@
 
 [Task Details](https://docs.google.com/document/d/17TKVIa7dGyukKQG93Ia3rcaBQe_YEPhSNppZaZb5mMc/edit?usp=share_link)
 
+## Time to complete the task
+One Day
 
 ## Development Setup
 
